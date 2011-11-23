@@ -1,9 +1,21 @@
-var SliderDiv = function() {
-  this.container = $('#slide-container');
-  this.viewport = this.container.find('.slide-wrapper');
-  this.slideObj = this.viewport.find('.slide');
-  this.nextButton = this.container.find('.nextButton');
-  this.prevButton = this.container.find('.prevButton');
+var SliderDiv = function(_options) {
+   var defaults = {
+    containerSelector: '#slide-container',
+    slideWrapperSelector: '.slide-wrapper',
+    slideSelector: '.slide',
+    nextButtonSelector: '.nextButton',
+    previousButtonSelector: '.prevButton',
+    hasKeyEvents: true,
+    moveSpeed: 500
+  }
+  this.settings = $.extend({}, defaults, _options);
+
+  this.container = $(this.settings.containerSelector);
+  this.viewport = this.container.find(this.settings.slideWrapperSelector);
+  this.slideObj = this.viewport.find(this.settings.slideSelector);
+  this.nextButton = this.container.find(this.settings.nextButtonSelector);
+  this.prevButton = this.container.find(this.settings.previousButtonSelector);
+
   this.currentSlide = null,
   this.MOVE_SPEED = 1000;
   this.HAS_KEY_EVENTS = true;
