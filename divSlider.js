@@ -1,11 +1,13 @@
 var SliderDiv = function() {
   this.container = $('#slide-container');
-  this.viewport = $('#slide-wrapper');
-  this.slideObj = $('.slide');
-  this.nextButton = $('.nextButton');
-  this.prevButton = $('.prevButton');
+  this.viewport = this.container.find('.slide-wrapper');
+  this.slideObj = this.viewport.find('.slide');
+  this.nextButton = this.container.find('.nextButton');
+  this.prevButton = this.container.find('.prevButton');
   this.currentSlide = null,
   this.MOVE_SPEED = 1000;
+  this.HAS_KEY_EVENTS = true;
+
   this.init();
 };
 
@@ -44,23 +46,17 @@ SliderDiv.prototype.move = function(_direction, _distance) {
   // Move
   var distance = _distance ? _distance : this.container.width();
   var to = _direction < 0 ? '+=' : '-=';
-  
-  // Height
-  /*
-  var newH = this.slideObj.eq(this.currentSlide).height() + 'px';
-  var toH = this.slideObj.eq(this.currentSlide+_direction).height() > newH ? '-=' : '+=';
-  */
-  
+   
   // Animation
   this.viewport.animate({
     left: to + distance
   }, this.MOVE_SPEED, function() {
-    //this.slideObj.eq(this.currentSlide).css({ height: this.slideObj.eq(this.currentSlide).height() + 'px' });
+   
   });
 };
 
 SliderDiv.prototype.moveTo = function(_index) {
-  if($("input").is(":focus")) return false;
+  if($("input, textarea").is(":focus")) return false;
   if(_index < 0 || _index == this.currentSlide || _index > this.countSlides) return false;
 
   // Direction
@@ -93,9 +89,9 @@ SliderDiv.prototype.getViewportHeight = function(_index) {
 };
 
 SliderDiv.prototype.keyEvent = function(e) {
+  if(!this.HAS_KEY_EVENTS) return false;  
   switch(e.keyCode) {
     case(39): this.next();break;
     case(37): this.prev();break;
   }
 };
-var slider = new SliderDiv();
