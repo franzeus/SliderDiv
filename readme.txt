@@ -1,3 +1,4 @@
+# -------------------------
 # HTML
 <div id="slide-container">
   <div class="slide-title"></div>
@@ -16,6 +17,7 @@
   var slider = new SliderDiv();
 </script>
 
+# -------------------------
 # CSS
 /* --- Slider --- */
 #slide-container {
