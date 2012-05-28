@@ -5,7 +5,7 @@ var SliderDiv = function(_options) {
     slideSelector: '.slide',
     nextButtonSelector: '.nextButton',
     previousButtonSelector: '.prevButton',
-    hasKeyEvents: true,
+    hasKeyEvents: false,
     moveSpeed: 500
   }
   this.settings = $.extend({}, defaults, _options);
@@ -17,15 +17,18 @@ var SliderDiv = function(_options) {
   this.prevButton = this.container.find(this.settings.previousButtonSelector);
 
   this.currentSlide = null,
-  this.MOVE_SPEED = 1000;
-  this.HAS_KEY_EVENTS = true;
-
+  this.MOVE_SPEED = this.settings.moveSpeed;
+  this.HAS_KEY_EVENTS = this.settings.hasKeyEvents;
+  
   this.init();
 };
 
 SliderDiv.prototype.init = function() {
     this.currentSlide = 0;
     this.handleButtonVisibility();
+    this.autoTimeout = null;
+    this.doPlay = false;
+    this.autoMoveTime = 5000;
 
     // Adapt size
     var vp = this.container.width() * this.slideObj.length;
@@ -38,6 +41,7 @@ SliderDiv.prototype.init = function() {
     $(document).keydown($.proxy(this.keyEvent, this));
 
     this.countSlides = this.slideObj.length;
+    return this;
 };
 
 SliderDiv.prototype.next = function(e) {
@@ -52,6 +56,26 @@ SliderDiv.prototype.prev = function(e) {
   this.move(-1);
 };
 
+SliderDiv.prototype.autoPlay = function(_moveTime) {
+  this.autoMoveTime = _moveTime || this.autoMoveTime;
+
+  var that = this;
+  this.autoTimeout = setInterval(function() { that.play(); }, this.autoMoveTime);
+  return this;
+};
+
+SliderDiv.prototype.play = function() {
+  if(this.currentSlide == this.countSlides - 1)
+    this.moveTo(0);
+  else
+    this.next();
+};
+
+SliderDiv.prototype.stopPlay = function() {
+  clearTimeout(this.autoTimeout);
+  return this;
+};
+
 SliderDiv.prototype.move = function(_direction, _distance) {
   this.handleButtonVisibility();
 
@@ -60,11 +84,14 @@ SliderDiv.prototype.move = function(_direction, _distance) {
   var to = _direction < 0 ? '+=' : '-=';
    
   // Animation
+  var that = this;
   this.viewport.animate({
     left: to + distance
   }, this.MOVE_SPEED, function() {
-   
+    that.afterMove();
   });
+
+  return this;
 };
 
 SliderDiv.prototype.moveTo = function(_index) {
@@ -82,6 +109,12 @@ SliderDiv.prototype.moveTo = function(_index) {
   // I like to move it move it
   this.currentSlide = _index;
   this.move(direction, distance);
+
+  return this;
+};
+
+SliderDiv.prototype.afterMove = function() {
+  return true;
 };
 
 SliderDiv.prototype.handleButtonVisibility = function() {
@@ -90,7 +123,7 @@ SliderDiv.prototype.handleButtonVisibility = function() {
   if(this.currentSlide == this.slideObj.length - 1)            
     this.nextButton.hide();
   if(this.currentSlide == 0)            
-    this.prevButton.hide()
+    this.prevButton.hide();
 };
 
 SliderDiv.prototype.getViewportHeight = function(_index) {
