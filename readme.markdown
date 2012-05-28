@@ -1,6 +1,6 @@
 ###Description###
 
-A tiny and simple to use content slider.
+A tiny and simple to use content slider (based on JQuery).
 
 ###How to use###
 This is the entire html you need for three slides:
@@ -28,10 +28,10 @@ This is the entire html you need for three slides:
 Some css is also necessary. The only thing you have to change is the width of the slider container.
 ```css
  #slide-container {
-      width:400px;
-      overflow:hidden;
-      height:auto;
-    }
+  width:400px;
+  overflow:hidden;
+  height:auto;
+}
 
 .slide-wrapper {
   overflow:hidden;
@@ -76,7 +76,7 @@ You can auto play the slideshow by calling the *autoPlay()* Methode.
 ```javascript
 // Takes time in miliseconds as param
 // Default is 5 seconds
-slider.autoPlay(5000);
+slider.autoPlay(3000);
 ```
 
 ####AfterMove####
@@ -87,4 +87,15 @@ If you want to call code after a slide has moved, you can overwrite the *afterMo
 slider.afterMove = function() {
   // do s.t. here
 };
+```
+
+
+####KeyEvents####
+
+If the option *hasKeyEvents* is set to true, you can navigate by using the left and right arrow keys.
+
+```javascript
+var slider = new SliderDiv({
+  hasKeyEvents: true,
+});
 ```

@@ -1,3 +1,8 @@
+/*
+  SliderDiv --v.1.2.0
+  Author: weberdevelopment.de
+  https://github.com/webarbeit/SliderDiv
+*/
 var SliderDiv = function(_options) {
    var defaults = {
     containerSelector: '#slide-container',
