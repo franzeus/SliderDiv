@@ -10,13 +10,13 @@ This is the entire html you need for three slides:
     
   <div class="slide-wrapper">
     <!-- Slide one -->
-    <div class="slide">1</div>
+    <div class="slide">Content 1</div>
 
     <!-- Slide two -->
-    <div class="slide">2</div>
+    <div class="slide">Content 2</div>
 
     <!-- Slide two -->
-    <div class="slide">3</div>
+    <div class="slide">Content 3</div>
   </div>
 
   <!-- Next and Prev Buttons -->
