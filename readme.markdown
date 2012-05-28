@@ -89,7 +89,6 @@ slider.afterMove = function() {
 };
 ```
 
-
 ####KeyEvents####
 
 If the option *hasKeyEvents* is set to true, you can navigate by using the left and right arrow keys.
@@ -98,4 +97,13 @@ If the option *hasKeyEvents* is set to true, you can navigate by using the left 
 var slider = new SliderDiv({
   hasKeyEvents: true,
 });
+```
+
+####Current Slide index####
+
+To get the index of the current slide, use currentSlide attribute.
+First slide has an index of 0.
+
+```javascript
+  slider.currentSlide;
 ```
