@@ -68,6 +68,23 @@ var slider = new SliderDiv({
   moveSpeed: 500
 });
 ```
+###Methods###
+
+####Move####
+
+To slide to a certain slide you can call the *moveTo()* method. It takes the index of the slide as param.
+
+```javascript
+// Will slide to the third slide-page
+slider.moveTo(2)
+```
+
+To slide to the next or previous slide, you can call:
+
+```javascript
+slider.next();
+slider.prev();
+```
 
 ####Auto-Play####
 
@@ -100,10 +117,9 @@ var slider = new SliderDiv({
 ```
 
 ####Current Slide index####
-
-To get the index of the current slide, use currentSlide attribute.
-First slide has an index of 0.
+To get the index of the current slide, you can access *currentSlide* attribute.
+The first slide has an index of 0.
 
 ```javascript
-  slider.currentSlide;
+slider.currentSlide;
 ```
