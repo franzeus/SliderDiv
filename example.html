@@ -1,26 +1,45 @@
 <html>
 <head>
-  <title></title>
+  <title>SliderDiv 1.2.1 - a simple and flexible to use content slider</title>
   <style>
+
     body { font-family:Arial; font-size: 1em; margin:0; line-height:1.5em; }
-    /* --- Slider --- */
+
+    /* --- SliderDiv CSS --- */
+
     #slide-container {
-      width:400px;
-      overflow:hidden;
+      width:400px; /* Has to be set */
       height:auto;
     }
 
+    /* 
+
+      The following is optional, although height:auto is recomended 
+
+    */
     .slide-wrapper {
-      overflow:hidden;
       height:auto;
-      position:relative;
     }
 
     .slide {
       background:#CCC;
-      position:relative;
-      float:left;
       min-height:100px;
+    }
+
+    #itemList {
+      list-style-type: none;
+    }
+
+    #itemList li.active-item {
+      background: #09f;
+    }
+
+    .slide-item {
+      float: left;
+      margin: 0 10px 0 0;
+      width:15px;
+      height:15px;
+      background: #888;
     }
 
     .slide-footer{
@@ -31,27 +50,55 @@
       border-top:1px solid #4775C4;
     }
 
-    .slide-title {}
   </style>
-  <script src="jquery-1.6.2.min.js"></script>
+
 </head>
 <body>
 
+<!-- The overall container. Its width decides the width of the viewport (set in CSS style) -->
 <div id="slide-container">
-  <div class="slide-title"></div>
-    
+  
+  <!-- SlideWrapper. Contains the slides -->
   <div class="slide-wrapper">
+
+    <!-- The first slide. Automatically gets the same width of the cointainer -->
     <div class="slide">1</div>
+
     <div class="slide">2</div>
+
     <div class="slide">3</div>
+
   </div>
 
-  <div class="slide-footer"><input type="button" class="prevButton" value="Prev" ><input type="button" class="nextButton" value="Next" ></div>  
+  <!-- Optional: Prev and Next Buttons -->
+  <div class="slide-footer">
+
+    <input type="button" class="prevButton" value="Prev" >
+    
+    <input type="button" class="nextButton" value="Next" >
+
+    <!-- Optional: list of li-Elements, which each represent a slide -->
+    <ul id="itemList"></ul>
+
+  </div>  
 </div>
 
+<!-- JQuery is necessary -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<!-- Including the library -->
 <script type="text/javascript" src="sliderdiv.js"></script>
+
+<!-- After the DOM is ready, we can instantiate a SliderDiv object -->
 <script type="text/javascript">
-  var slider = new SliderDiv();
+  
+  var slider = new SliderDiv({
+
+    itemListSelector : "#itemList"  // An item list will only be generated if this selector is set. 
+
+  });
+
 </script>
+
 </body>
 </html>
