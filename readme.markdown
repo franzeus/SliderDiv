@@ -53,7 +53,7 @@ var slider = new SliderDiv({
   containerSelector: '#slide-container',
   slideWrapperSelector: '.slide-wrapper',
   slideSelector: '.slide',
-  itemListSelector : null, // Set the id of a ul element (i.e. #itemList)
+  itemListSelector : null, // To enable, set the id/class of an ul element (i.e. #itemList)
   nextButtonSelector: '.nextButton',
   previousButtonSelector: '.prevButton',
   hasKeyEvents: true,
