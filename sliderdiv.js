@@ -151,11 +151,11 @@ SliderDiv.prototype.autoPlay = function( _moveTime ) {
   
   this.autoMoveTime = _moveTime || this.autoMoveTime;
 
-  var that = this;
+  var self = this;
   
   this.autoTimeout = setInterval(function() {
 
-    that.play(); 
+    self.play(); 
 
   }, this.autoMoveTime);
 
@@ -190,14 +190,14 @@ SliderDiv.prototype.move = function( _direction, _distance ) {
   var to = _direction < 0 ? '+=' : '-=';
    
   // Animation
-  var that = this;
+  var self = this;
   this.viewport.animate({
 
     left: to + distance
 
   }, this.MOVE_SPEED, function() {
 
-    that.afterMove();
+    self.afterMove();
 
   });
 
@@ -208,7 +208,7 @@ SliderDiv.prototype.moveTo = function( _index ) {
 
   if($("input, textarea").is(":focus")) return false;
   
-  if(_index < 0 || _index == this.currentSlideIndex || _index > this.countSlides) return false;
+  if(_index < 0 || _index === this.currentSlideIndex || _index > this.countSlides) return false;
 
   // Direction
   var currentLeft = this.slideObjects.eq(this.currentSlideIndex).offset().left;
@@ -246,12 +246,12 @@ SliderDiv.prototype.highLightItem = function() {
 SliderDiv.prototype.handleButtonVisibility = function() {
   
   this.nextButton.show();
-  this.prevButton.show()
+  this.prevButton.show();
   
-  if(this.currentSlideIndex == this.slideObjects.length - 1)            
+  if(this.currentSlideIndex === this.slideObjects.length - 1)            
     this.nextButton.hide();
   
-  if(this.currentSlideIndex == 0)            
+  if(this.currentSlideIndex === 0)            
     this.prevButton.hide();
 
 };
