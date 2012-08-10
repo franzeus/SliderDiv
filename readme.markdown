@@ -53,6 +53,8 @@ Include the library and init the slider like this
 
 ###Options###
 
+If you want to have multiple slideshows or just adapt it to your wishes, you can set some options:
+
 ```javascript
 var slider = new SliderDiv({
   
@@ -123,9 +125,9 @@ var slider = new SliderDiv({
 ```
 
 ####Current Slide index####
-To get the index of the current slide, you can access *currentSlide* attribute.
+To get the index of the current slide, you can access *currentSlideIndex* attribute.
 The first slide has an index of 0.
 
 ```javascript
-slider.currentSlide;
+slider.currentSlideIndex;
 ```

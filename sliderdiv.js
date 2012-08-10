@@ -90,7 +90,7 @@ SliderDiv.prototype.init = function() {
 
 SliderDiv.prototype.reset = function() {
 
-  this.currentSlide = 0;
+  this.currentSlideIndex = 0;
   this.handleButtonVisibility();
   this.autoTimeout = null;
   this.doPlay = false;
@@ -127,9 +127,9 @@ SliderDiv.prototype.buildItems = function() {
 
 SliderDiv.prototype.next = function(e) {
 
-  if(this.currentSlide === this.slideObjects.length - 1) return false;
+  if(this.currentSlideIndex === this.slideObjects.length - 1) return false;
   
-  this.currentSlide++;
+  this.currentSlideIndex++;
   this.move(1);
 
   return this;
@@ -138,9 +138,9 @@ SliderDiv.prototype.next = function(e) {
 
 SliderDiv.prototype.prev = function(e) {
 
-  if(this.currentSlide === 0) return false;
+  if(this.currentSlideIndex === 0) return false;
   
-  this.currentSlide--;
+  this.currentSlideIndex--;
   this.move(-1);
 
   return this;
@@ -164,7 +164,7 @@ SliderDiv.prototype.autoPlay = function( _moveTime ) {
 
 SliderDiv.prototype.play = function() {
 
-  if(this.currentSlide === this.countSlides - 1)
+  if(this.currentSlideIndex === this.countSlides - 1)
     this.moveTo(0);
   else
     this.next();
@@ -208,18 +208,18 @@ SliderDiv.prototype.moveTo = function( _index ) {
 
   if($("input, textarea").is(":focus")) return false;
   
-  if(_index < 0 || _index == this.currentSlide || _index > this.countSlides) return false;
+  if(_index < 0 || _index == this.currentSlideIndex || _index > this.countSlides) return false;
 
   // Direction
-  var currentLeft = this.slideObjects.eq(this.currentSlide).offset().left;
+  var currentLeft = this.slideObjects.eq(this.currentSlideIndex).offset().left;
   var nextLeft = this.slideObjects.eq(_index).offset().left;
   var direction = currentLeft > nextLeft ? -1 : 1;
 
   // Distance
-  var distance = this.container.width() * Math.abs(this.currentSlide - _index);
+  var distance = this.container.width() * Math.abs(this.currentSlideIndex - _index);
 
   // I like to move it move it
-  this.currentSlide = _index;
+  this.currentSlideIndex = _index;
   this.move(direction, distance);
 
   return this;
@@ -239,7 +239,7 @@ SliderDiv.prototype.highLightItem = function() {
 
   items.removeClass(this.activeItemClass);
 
-  items.eq(this.currentSlide).addClass(this.activeItemClass);
+  items.eq(this.currentSlideIndex).addClass(this.activeItemClass);
 
 };
 
@@ -248,10 +248,10 @@ SliderDiv.prototype.handleButtonVisibility = function() {
   this.nextButton.show();
   this.prevButton.show()
   
-  if(this.currentSlide == this.slideObjects.length - 1)            
+  if(this.currentSlideIndex == this.slideObjects.length - 1)            
     this.nextButton.hide();
   
-  if(this.currentSlide == 0)            
+  if(this.currentSlideIndex == 0)            
     this.prevButton.hide();
 
 };
