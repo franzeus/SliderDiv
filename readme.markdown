@@ -2,6 +2,11 @@
 
 A tiny and simple to use content slider (based on JQuery).
 
+Why another? Couldn't find a simple one which doesnt have a ton of lines of code and
+features I would never want as an user.
+
+You can also use it as image slideshow ;)
+
 ###How to use###
 This is the entire html you need for three slides:
 
@@ -58,7 +63,7 @@ var slider = new SliderDiv({
   // Slide-Items
   itemListSelector : null, // To enable, set the id/class of an ul element (i.e. #itemList)
   itemListElementClass : "slide-item", // ! This is just the class name, not a jquery selector
-  activeItemClass : 'active-item', // // ! This is just the class name, not a jquery selector
+  activeItemClass : 'active-item', // ! This is just the class name, not a jquery selector
 
   // Slide buttons selector
   nextButtonSelector: '.nextButton',
