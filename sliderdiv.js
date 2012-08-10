@@ -40,8 +40,8 @@ var SliderDiv = function(_options) {
   this.itemListElementClass = this.settings.itemListElementClass;
   this.activeItemClass = this.settings.activeItemClass;
 
-  this.nextButton = this.container.find(this.settings.nextButtonSelector);
-  this.prevButton = this.container.find(this.settings.previousButtonSelector);
+  this.nextButton = $(this.settings.nextButtonSelector);
+  this.prevButton = $(this.settings.previousButtonSelector);
 
   this.MOVE_SPEED = this.settings.moveSpeed;
   this.HAS_KEY_EVENTS = this.settings.hasKeyEvents;
@@ -55,9 +55,9 @@ SliderDiv.prototype.init = function() {
 
   // Set Styles
   this.container.css({ "overflow" : "hidden" });   
-  // Adapt size
-  var vp = this.container.width() * this.slideObjects.length;
   
+  // Adapt size of viewport
+  var vp = this.container.width() * this.slideObjects.length;
   this.viewport.css({ 
 
     width :  vp + 'px', 
