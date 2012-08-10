@@ -19,6 +19,10 @@ var SliderDiv = function(_options) {
 
     itemListSelector : null,
 
+    itemListElementClass : "slide-item",
+
+    activeItemClass : 'active-item',
+
     hasKeyEvents : false,
 
     moveSpeed : 500
@@ -33,6 +37,8 @@ var SliderDiv = function(_options) {
   this.slideObjects = this.viewport.find(this.settings.slideSelector);
 
   this.itemUl = $(this.settings.itemListSelector);
+  this.itemListElementClass = this.settings.itemListElementClass;
+  this.activeItemClass = this.settings.activeItemClass;
 
   this.nextButton = this.container.find(this.settings.nextButtonSelector);
   this.prevButton = this.container.find(this.settings.previousButtonSelector);
@@ -79,7 +85,7 @@ SliderDiv.prototype.init = function() {
     $(document).keydown($.proxy(this.keyEvent, this));
   
   return this;
-  
+
 };
 
 SliderDiv.prototype.reset = function() {
@@ -104,7 +110,7 @@ SliderDiv.prototype.buildItems = function() {
 
   this.slideObjects.each(function(k, v) {
 
-    self.itemUl.append('<li class="slide-item"></li>');
+    self.itemUl.append('<li class="' + self.itemListElementClass + '"></li>');
 
   });
 
@@ -231,9 +237,9 @@ SliderDiv.prototype.highLightItem = function() {
 
   var items = this.itemUl.find("li");
 
-  items.removeClass("active-item");
+  items.removeClass(this.activeItemClass);
 
-  items.eq(this.currentSlide).addClass("active-item");
+  items.eq(this.currentSlide).addClass(this.activeItemClass);
 
 };
 

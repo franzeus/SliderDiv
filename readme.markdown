@@ -50,13 +50,22 @@ Include the library and init the slider like this
 
 ```javascript
 var slider = new SliderDiv({
+  
   containerSelector: '#slide-container',
   slideWrapperSelector: '.slide-wrapper',
   slideSelector: '.slide',
+  
+  // Slide-Items
   itemListSelector : null, // To enable, set the id/class of an ul element (i.e. #itemList)
+  itemListElementClass : "slide-item", // ! This is just the class name, not a jquery selector
+  activeItemClass : 'active-item', // // ! This is just the class name, not a jquery selector
+
+  // Slide buttons selector
   nextButtonSelector: '.nextButton',
   previousButtonSelector: '.prevButton',
+
   hasKeyEvents: true,
+
   moveSpeed: 500
 });
 ```
