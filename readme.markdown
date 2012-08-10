@@ -19,29 +19,20 @@ This is the entire html you need for three slides:
     <div class="slide">Content 3</div>
   </div>
 
-  <!-- Next and Prev Buttons -->
+  <!-- Optional: Next and Prev Buttons -->
   <input type="button" class="prevButton" value="Prev" >
   <input type="button" class="nextButton" value="Next" >
+
+  <!-- Optional: list of li-Elements, which each represent a slide -->
+  <ul id="itemList"></ul>
 </div>
 ```
 
-Some css is also necessary. The only thing you have to change is the width of the slider container.
+The only thing you have to set is the width of the slider container.
+Thus you can decided the width of the viewport.
 ```css
  #slide-container {
   width:400px;
-  overflow:hidden;
-  height:auto;
-}
-
-.slide-wrapper {
-  overflow:hidden;
-  height:auto;
-  position:relative;
-}
-
-.slide {
-  position:relative;
-  float:left;      
 }
 ```
 
@@ -62,6 +53,7 @@ var slider = new SliderDiv({
   containerSelector: '#slide-container',
   slideWrapperSelector: '.slide-wrapper',
   slideSelector: '.slide',
+  itemListSelector : null, // Set the id of a ul element (i.e. #itemList)
   nextButtonSelector: '.nextButton',
   previousButtonSelector: '.prevButton',
   hasKeyEvents: true,
@@ -72,7 +64,7 @@ var slider = new SliderDiv({
 
 ####Move####
 
-To slide to a certain slide you can call the *moveTo()* method. It takes the index of the slide as param.
+To slide to a certain slide you can call the *moveTo()* method. It takes the zero-based index of the slide as param.
 
 ```javascript
 // Will slide to the third slide-page
