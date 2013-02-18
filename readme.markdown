@@ -51,6 +51,9 @@ Include the library and init the slider like this
 </script>
 ```
 
+###Dependencies###
+* JQuery
+
 ###Options###
 
 If you want to have multiple slideshows or just adapt it to your wishes, you can set some options:
