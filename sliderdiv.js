@@ -1,11 +1,12 @@
 /*
-  SliderDiv --v.1.2.1
+  SliderDiv --v.1.2.2
   Author: weberdevelopment.de
   https://github.com/webarbeit/SliderDiv
 */
 var SliderDiv = function(_options) {
 
-   var defaults = {
+  // Default params
+  var defaults = {
 
     containerSelector : '#slide-container',
 
@@ -29,19 +30,19 @@ var SliderDiv = function(_options) {
   }
   
   // Merge default settings with arguments
-  this.settings = $.extend({}, defaults, _options);
+  this.settings = jQuery.extend({}, defaults, _options);
 
-  this.container = $(this.settings.containerSelector);
+  this.container = jQuery(this.settings.containerSelector);
   
   this.viewport = this.container.find(this.settings.slideWrapperSelector);
   this.slideObjects = this.viewport.find(this.settings.slideSelector);
 
-  this.itemUl = $(this.settings.itemListSelector);
+  this.itemUl = jQuery(this.settings.itemListSelector);
   this.itemListElementClass = this.settings.itemListElementClass;
   this.activeItemClass = this.settings.activeItemClass;
 
-  this.nextButton = $(this.settings.nextButtonSelector);
-  this.prevButton = $(this.settings.previousButtonSelector);
+  this.nextButton = jQuery(this.settings.nextButtonSelector);
+  this.prevButton = jQuery(this.settings.previousButtonSelector);
 
   this.MOVE_SPEED = this.settings.moveSpeed;
   this.HAS_KEY_EVENTS = this.settings.hasKeyEvents;
@@ -49,12 +50,15 @@ var SliderDiv = function(_options) {
   this.init();
 };
 
+/**
+* Initilize the SliderDiv object
+*/
 SliderDiv.prototype.init = function() {
 
   this.reset();
 
   // Set Styles
-  this.container.css({ "overflow" : "hidden" });   
+  this.container.css({ "overflow" : "hidden" });
   
   // Adapt size of viewport
   var vp = this.container.width() * this.slideObjects.length;
@@ -78,16 +82,21 @@ SliderDiv.prototype.init = function() {
   this.buildItems();
 
   // Events
-  this.nextButton.click($.proxy(this.next, this));
-  this.prevButton.click($.proxy(this.prev, this));
+  if (this.nextButton)
+    this.nextButton.click(jQuery.proxy(this.next, this));
+  if (this.prevButton)
+    this.prevButton.click(jQuery.proxy(this.prev, this));
 
-  if(this.HAS_KEY_EVENTS)
-    $(document).keydown($.proxy(this.keyEvent, this));
+  if (this.HAS_KEY_EVENTS)
+    jQuery(document).keydown(jQuery.proxy(this.keyEvent, this));
   
   return this;
 
 };
 
+/**
+* Resets the slider
+*/
 SliderDiv.prototype.reset = function() {
 
   this.currentSlideIndex = 0;
@@ -102,11 +111,15 @@ SliderDiv.prototype.reset = function() {
 
 };
 
+/**
+* Creates the item list
+* Each item list represents a slide
+*/
 SliderDiv.prototype.buildItems = function() {
 
   var self = this;
 
-  if( !this.itemUl.length || this.countSlides === 0 ) return false;
+  if ( !this.itemUl.length || this.countSlides === 0 ) return false;
 
   this.slideObjects.each(function(k, v) {
 
@@ -117,7 +130,7 @@ SliderDiv.prototype.buildItems = function() {
   // Bind event
   this.itemUl.find("li").bind("click", function() {
 
-    self.moveTo( $(this).index() );
+    self.moveTo( jQuery(this).index() );
 
   });
 
@@ -125,9 +138,12 @@ SliderDiv.prototype.buildItems = function() {
 
 };
 
+/**
+* Moves to the next slide
+*/
 SliderDiv.prototype.next = function(e) {
 
-  if(this.currentSlideIndex === this.slideObjects.length - 1) return false;
+  if (this.currentSlideIndex === this.slideObjects.length - 1) return false;
   
   this.currentSlideIndex++;
   this.move(1);
@@ -136,9 +152,12 @@ SliderDiv.prototype.next = function(e) {
 
 };
 
+/**
+* Moves to the previous slide
+*/
 SliderDiv.prototype.prev = function(e) {
 
-  if(this.currentSlideIndex === 0) return false;
+  if (this.currentSlideIndex === 0) return false;
   
   this.currentSlideIndex--;
   this.move(-1);
@@ -147,6 +166,10 @@ SliderDiv.prototype.prev = function(e) {
 
 };
 
+/**
+* Moves automatically the slides each _moveTime milliseconds
+* @param int _moveTime The time in milliseconds
+*/
 SliderDiv.prototype.autoPlay = function( _moveTime ) {
   
   this.autoMoveTime = _moveTime || this.autoMoveTime;
@@ -162,9 +185,12 @@ SliderDiv.prototype.autoPlay = function( _moveTime ) {
   return this;
 };
 
+/**
+* Moves to the next or when the slideshow is over to the first slide
+*/
 SliderDiv.prototype.play = function() {
 
-  if(this.currentSlideIndex === this.countSlides - 1)
+  if (this.currentSlideIndex === this.countSlides - 1)
     this.moveTo(0);
   else
     this.next();
@@ -172,6 +198,9 @@ SliderDiv.prototype.play = function() {
   return this;
 };
 
+/**
+* Stops autoPlay
+*/
 SliderDiv.prototype.stopPlay = function() {
 
   clearTimeout(this.autoTimeout);
@@ -179,6 +208,12 @@ SliderDiv.prototype.stopPlay = function() {
 
 };
 
+/**
+* Moves to a slide
+* @param int _direction Forward or backwards
+* @param int _distance The distance in pixel between the current slide and the requested slide
+* @return this
+*/
 SliderDiv.prototype.move = function( _direction, _distance ) {
 
   this.handleButtonVisibility();
@@ -204,11 +239,16 @@ SliderDiv.prototype.move = function( _direction, _distance ) {
   return this;
 };
 
+/**
+* Moves to a slide by index
+* @param int index The index of the set of slide-divs it should slide to
+* @return this
+*/
 SliderDiv.prototype.moveTo = function( _index ) {
 
-  if($("input, textarea").is(":focus")) return false;
+  if (jQuery("input, textarea").is(":focus")) return false;
   
-  if(_index < 0 || _index === this.currentSlideIndex || _index > this.countSlides) return false;
+  if (_index < 0 || _index === this.currentSlideIndex || _index > this.countSlides) return false;
 
   // Direction
   var currentLeft = this.slideObjects.eq(this.currentSlideIndex).offset().left;
@@ -225,15 +265,21 @@ SliderDiv.prototype.moveTo = function( _index ) {
   return this;
 };
 
+/**
+* Will be called after sliding
+*/
 SliderDiv.prototype.afterMove = function() {
 
   return true;
 
 };
 
+/**
+* Highlights the current item
+*/
 SliderDiv.prototype.highLightItem = function() {
 
-  if( !this.itemUl.length ) return false;
+  if ( !this.itemUl.length ) return false;
 
   var items = this.itemUl.find("li");
 
@@ -243,23 +289,31 @@ SliderDiv.prototype.highLightItem = function() {
 
 };
 
+/**
+* Handles the visibility of the prev + next buttons
+* First slide hides prev-button. Last slide hides next-button.
+*/
 SliderDiv.prototype.handleButtonVisibility = function() {
   
   this.nextButton.show();
   this.prevButton.show();
   
-  if(this.currentSlideIndex === this.slideObjects.length - 1)            
+  if (this.currentSlideIndex === this.slideObjects.length - 1)            
     this.nextButton.hide();
   
-  if(this.currentSlideIndex === 0)            
+  if (this.currentSlideIndex === 0)            
     this.prevButton.hide();
 
 };
 
+/**
+* Get the height of the current slide-div
+* @param int _index The index of the current slide in the set of slide-divs
+*/
 SliderDiv.prototype.getViewportHeight = function( _index ) {
 
-  var hiddenFields = this.slideObjects.eq(_index).find(':hidden').show();
-  var newH = this.slideObjects.eq(_index).height();
+  var hiddenFields = this.slideObjects.eq(_index).find(':hidden').show(),
+      newH = this.slideObjects.eq(_index).height();
   
   hiddenFields.hide();
   
@@ -267,9 +321,12 @@ SliderDiv.prototype.getViewportHeight = function( _index ) {
 
 };
 
+/**
+* Handles key events
+*/
 SliderDiv.prototype.keyEvent = function(e) {
 
-  if( !this.HAS_KEY_EVENTS ) return false;
+  if ( !this.HAS_KEY_EVENTS ) return false;
   
   switch(e.keyCode) {
 
