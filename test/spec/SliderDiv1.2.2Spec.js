@@ -7,6 +7,8 @@ describe("SliderDiv1.2.2", function() {
         loadFixtures('sliderFixture.html');
     });    
 
+    // ---------------------------------------------------
+
     describe("when SliderDiv has been initialized", function() {
 
         it("should overwrite custom params", function() {
@@ -50,49 +52,66 @@ describe("SliderDiv1.2.2", function() {
 
     });
 
+    // ---------------------------------------------------
+
     describe("when SliderDiv moves slide", function() {
+
         var slider = new SliderDiv(),
             viewPortWidth = 400;
 
-        it("should call afterMove() after slide changed", function() {
-            slider.next();
+        it("should increase currentSlideIndex", function() {
 
-            spyOn(slider, 'afterMove');
-            expect(slider.afterMove).toHaveBeenCalled();
+            runs(function() {
+                slider.next();
+            });
+
+            waitsFor(function() {
+                return slider.currentSlideIndex;
+            }, "The currentSlideIndex should be incremented", 1000);
+            
+            runs(function() {
+                expect(slider.currentSlideIndex).toBeGreaterThan(0);
+            });
+
         });
 
         it("should move on calling moveTo() method", function() {
+            var slider = new SliderDiv();
 
-            var index = 1;
+            var index = 2;
 
-            // slider.afterMove = function() {
-            //     console.log("aftermove");
-            //     console.log(slider.currentSlideIndex);
-            //     expect(slider.currentSlideIndex).toEqual(1);
-            //     expect(slider.viewport).toHaveCss({ left : -(viewPortWidth * index) + "px"});
-            // }
+            runs(function() {
+                expect(slider.currentSlideIndex).toEqual(0);
+                slider.moveTo(2);
+            });
 
-            slider.moveTo(index);
-
+            waitsFor(function() {
+                return slider;
+            }, "The currentSlideIndex should be incrementedby 2", 2500);
             
-
-            index = 2;
-            slider.moveTo(index);
-            slider.afterMove = function() {
-                expect(slider.viewport).toHaveCss({ left : -(viewPortWidth * index) + "px"});
+            runs(function() {
                 expect(slider.currentSlideIndex).toEqual(2);
-            }
+                //expect(slider.viewport).toHaveCss({ left : -(viewPortWidth * (index+1)) + "px"});
+            });
+            
         });
 
         it("should move to next slide on calling next() method", function() {
             
             var slider = new SliderDiv();
-            slider.next();
+
+            runs(function() {
+                expect(slider.currentSlideIndex).toEqual(0);
+                slider.next();
+            });
+
+            waitsFor(function() {
+                return slider;
+            }, "The currentSlideIndex should be incremented by 1", 1500);
             
-            slider.afterMove = function() {
-                expect(slider.currentSlideIndex).toEqual(12);
-                expect(slider.viewport).toHaveCss({ left : -(viewPortWidth + 2) + "px"});
-            }
+            runs(function() {
+                expect(slider.currentSlideIndex).toEqual(1);
+            });
 
         });
 
@@ -105,24 +124,45 @@ describe("SliderDiv1.2.2", function() {
         });
 
         it("should show prev and next button on second slide", function() {
-            slider.next();
+            var slider = new SliderDiv();
 
-            slider.afterMove = function() {
+            runs(function() {
+                expect(slider.currentSlideIndex).toEqual(0);
+                slider.next();
+            });
+
+            waitsFor(function() {
+                return slider;
+            }, "The slider should move next", 1500);
+            
+            runs(function() {
                 expect(slider.nextButton).toBeVisible();
                 expect(slider.prevButton).toBeVisible();
-            };
+            });
+           
         });
 
         it("should show prev and hide next button on last slide", function() {
-            slider.moveTo(2);
+            var slider = new SliderDiv();
 
-            slider.afterMove = function() {
+            runs(function() {
+                expect(slider.currentSlideIndex).toEqual(0);
+                slider.moveTo(2);
+            });
+
+            waitsFor(function() {
+                return slider;
+            }, "The slider should move next", 1500);
+            
+            runs(function() {
                 expect(slider.nextButton).toBeHidden();
                 expect(slider.prevButton).toBeVisible();
-            }
+            });
         })
 
     });
+
+    // ---------------------------------------------------
 
     it("should reset specific params", function() {
 
