@@ -221,11 +221,11 @@ SliderDiv.prototype.move = function( _direction, _distance ) {
   this.highLightItem();
 
   // Move
-  var distance = _distance ? _distance : this.container.width();
-  var to = _direction < 0 ? '+=' : '-=';
-   
+  var distance = _distance ? _distance : this.container.width(),
+      to = _direction < 0 ? '+=' : '-=',
+      self = this;
+      
   // Animation
-  var self = this;
   this.viewport.animate({
 
     left: to + distance
@@ -251,12 +251,11 @@ SliderDiv.prototype.moveTo = function( _index ) {
   if (_index < 0 || _index === this.currentSlideIndex || _index > this.countSlides) return false;
 
   // Direction
-  var currentLeft = this.slideObjects.eq(this.currentSlideIndex).offset().left;
-  var nextLeft = this.slideObjects.eq(_index).offset().left;
-  var direction = currentLeft > nextLeft ? -1 : 1;
-
-  // Distance
-  var distance = this.container.width() * Math.abs(this.currentSlideIndex - _index);
+  var currentLeft = this.slideObjects.eq(this.currentSlideIndex).offset().left,
+      nextLeft = this.slideObjects.eq(_index).offset().left,
+      direction = currentLeft > nextLeft ? -1 : 1,
+      // Distance
+      distance = this.container.width() * Math.abs(this.currentSlideIndex - _index);
 
   // I like to move it move it
   this.currentSlideIndex = _index;
