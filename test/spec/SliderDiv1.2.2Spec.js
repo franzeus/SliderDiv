@@ -59,6 +59,9 @@ describe("SliderDiv1.2.2", function() {
         var slider = new SliderDiv(),
             viewPortWidth = 400;
 
+        // ------------------------------------------------------
+        // MOVE METHODS
+
         it("should increase currentSlideIndex", function() {
 
             runs(function() {
@@ -76,9 +79,8 @@ describe("SliderDiv1.2.2", function() {
         });
 
         it("should move on calling moveTo() method", function() {
-            var slider = new SliderDiv();
-
-            var index = 2;
+            var slider = new SliderDiv(),
+                index = 2;
 
             runs(function() {
                 expect(slider.currentSlideIndex).toEqual(0);
@@ -114,6 +116,48 @@ describe("SliderDiv1.2.2", function() {
             });
 
         });
+
+        it("should move to previous slide on calling prev() method", function() {
+            
+            var slider = new SliderDiv();
+
+            runs(function() {
+                expect(slider.currentSlideIndex).toEqual(0);
+                slider.next();
+                slider.prev();
+            });
+
+            waitsFor(function() {
+                return slider;
+            }, "The currentSlideIndex should be decreased by 1", 1500);
+            
+            runs(function() {
+                expect(slider.currentSlideIndex).toEqual(0);
+            });
+
+        });
+
+        it("should not move to previous slide on calling prev() method", function() {
+            
+            var slider = new SliderDiv();
+
+            runs(function() {
+                expect(slider.currentSlideIndex).toEqual(0);
+                slider.prev();
+            });
+
+            waitsFor(function() {
+                return slider;
+            }, "The currentSlideIndex should not be changed", 1500);
+            
+            runs(function() {
+                expect(slider.currentSlideIndex).toEqual(0);
+            });
+
+        });
+
+        // ------------------------------------------------------
+        // PREV + NEXT BUTTONS
 
         it("should hide prev button and show next button on first slide", function() {
             var slider = new SliderDiv();
@@ -158,7 +202,29 @@ describe("SliderDiv1.2.2", function() {
                 expect(slider.nextButton).toBeHidden();
                 expect(slider.prevButton).toBeVisible();
             });
-        })
+        });
+
+        // ------------------------------------------------------
+        // ITEMS
+    
+        it("should highlight corresponding item", function() {
+            var slider = new SliderDiv();
+
+            runs(function() {
+                expect(slider.currentSlideIndex).toEqual(0);
+                slider.moveTo(1);
+            });
+
+            waitsFor(function() {
+                return slider;
+            }, "The slider should move to index 1", 1500);
+            
+            runs(function() {
+                expect(slider.itemUl.find('li').eq(0)).not.toHaveClass("active-item");
+                expect(slider.itemUl.find('li').eq(1)).toHaveClass("active-item");
+                expect(slider.itemUl.find('li').eq(2)).not.toHaveClass("active-item");
+            });
+        });
 
     });
 
