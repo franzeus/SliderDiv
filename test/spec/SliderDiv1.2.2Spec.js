@@ -51,33 +51,57 @@ describe("SliderDiv1.2.2", function() {
     });
 
     describe("when SliderDiv moves slide", function() {
-
         var slider = new SliderDiv(),
             viewPortWidth = 400;
+
+        it("should call afterMove() after slide changed", function() {
+            slider.next();
+
+            spyOn(slider, 'afterMove');
+            expect(slider.afterMove).toHaveBeenCalled();
+        });
 
         it("should move on calling moveTo() method", function() {
 
             var index = 1;
 
+            // slider.afterMove = function() {
+            //     console.log("aftermove");
+            //     console.log(slider.currentSlideIndex);
+            //     expect(slider.currentSlideIndex).toEqual(1);
+            //     expect(slider.viewport).toHaveCss({ left : -(viewPortWidth * index) + "px"});
+            // }
+
             slider.moveTo(index);
-            slider.afterMove = function() {
-                expect(slider.viewport).toHaveCss({ left : -(viewPortWidth * index) + "px"});
-            }
+
+            
 
             index = 2;
             slider.moveTo(index);
             slider.afterMove = function() {
                 expect(slider.viewport).toHaveCss({ left : -(viewPortWidth * index) + "px"});
+                expect(slider.currentSlideIndex).toEqual(2);
             }
         });
 
-        it("should hide prev button and show next button on first slide", function() {
-            slider.moveTo(0);
+        it("should move to next slide on calling next() method", function() {
+            
+            var slider = new SliderDiv();
+            slider.next();
             
             slider.afterMove = function() {
-                expect(slider.nextButton).toBeVisible();
-                expect(slider.prevButton).toBeHidden();
+                expect(slider.currentSlideIndex).toEqual(12);
+                expect(slider.viewport).toHaveCss({ left : -(viewPortWidth + 2) + "px"});
             }
+
+        });
+
+        it("should hide prev button and show next button on first slide", function() {
+            var slider = new SliderDiv();
+            
+            expect(slider.nextButton).toBeVisible();
+            expect(slider.prevButton).toBeHidden();
+
         });
 
         it("should show prev and next button on second slide", function() {
