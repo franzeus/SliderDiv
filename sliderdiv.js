@@ -18,7 +18,7 @@ var SliderDiv = function(_options) {
   
     previousButtonSelector : '.prevButton',
 
-    itemListSelector : null,
+    itemListSelector : '#itemList',
 
     itemListElementClass : "slide-item",
 
