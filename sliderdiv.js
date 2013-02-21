@@ -246,25 +246,26 @@ SliderDiv.prototype.move = function( _direction, _distance ) {
 */
 SliderDiv.prototype.moveTo = function( _index ) {
 
-  if (jQuery("input, textarea").is(":focus") || !_index) return false;
+  var index = _index;
+  if (jQuery("input, textarea").is(":focus")) return false;
   
-  if(_index === this.currentSlideIndex) {
+  if(index === this.currentSlideIndex) {
     return false;
-  } else if (_index < 0) {
-    _index = 0;
-  } else if (_index >= this.countSlides) {
-    _index = this.countSlides - 1;
+  } else if (index < 0) {
+    index = 0;  
+  } else if (index >= this.countSlides) {
+    index = this.countSlides - 1;
   }
   
   // Direction
   var currentLeft = this.slideObjects.eq(this.currentSlideIndex).offset().left,
-      nextLeft = this.slideObjects.eq(_index).offset().left,
+      nextLeft = this.slideObjects.eq(index).offset().left,
       direction = currentLeft > nextLeft ? -1 : 1,
       // Distance
-      distance = this.container.width() * Math.abs(this.currentSlideIndex - _index);
+      distance = this.container.width() * Math.abs(this.currentSlideIndex - index);
 
   // I like to move it move it
-  this.currentSlideIndex = _index;
+  this.currentSlideIndex = index;
   this.move(direction, distance);
 
   return this;
