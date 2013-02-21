@@ -137,7 +137,7 @@ describe("SliderDiv1.2.2", function() {
 
         });
 
-        it("should not move to previous slide on calling prev() method", function() {
+        it("should not move to before first slide", function() {
             
             var slider = new SliderDiv();
 
@@ -152,6 +152,44 @@ describe("SliderDiv1.2.2", function() {
             
             runs(function() {
                 expect(slider.currentSlideIndex).toEqual(0);
+            });
+
+        });
+
+        it("should not move after the last slide", function() {
+            
+            var slider = new SliderDiv();
+
+            runs(function() {
+                expect(slider.currentSlideIndex).toEqual(0);
+                slider.moveTo(3);
+            });
+
+            waitsFor(function() {
+                return slider;
+            }, "The currentSlideIndex should not be changed", 1500);
+            
+            runs(function() {
+                expect(slider.currentSlideIndex).toEqual(2);
+            });
+
+        });
+
+        it("should not move when current slide is requested slide", function() {
+            
+            var slider = new SliderDiv();
+
+            runs(function() {
+                slider.currentSlideIndex = 2;
+                slider.moveTo(2);
+            });
+
+            waitsFor(function() {
+                return slider;
+            }, "The currentSlideIndex should not be changed", 1500);
+            
+            runs(function() {
+                expect(slider.currentSlideIndex).toEqual(2);
             });
 
         });

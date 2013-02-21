@@ -246,10 +246,16 @@ SliderDiv.prototype.move = function( _direction, _distance ) {
 */
 SliderDiv.prototype.moveTo = function( _index ) {
 
-  if (jQuery("input, textarea").is(":focus")) return false;
+  if (jQuery("input, textarea").is(":focus") || !_index) return false;
   
-  if (_index < 0 || _index === this.currentSlideIndex || _index > this.countSlides) return false;
-
+  if(_index === this.currentSlideIndex) {
+    return false;
+  } else if (_index < 0) {
+    _index = 0;
+  } else if (_index >= this.countSlides) {
+    _index = this.countSlides - 1;
+  }
+  
   // Direction
   var currentLeft = this.slideObjects.eq(this.currentSlideIndex).offset().left,
       nextLeft = this.slideObjects.eq(_index).offset().left,
